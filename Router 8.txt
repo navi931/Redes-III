@@ -1,0 +1,154 @@
+R8
+en
+conf t
+hostname R8
+enable secret cisco
+banner motd #
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                                                                                                                       %%%
+%%%   .----------------. .----------------. .----------------. .----------------. .----------------. .----------------.   %%%
+%%%  | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. | .--------------. |  %%%
+%%%  | |  _________   | | |  _______     | | |      __      | | |     ______   | | |    _______   | | |      __      | |  %%%
+%%%  | | |  _   _  |  | | | |_   __ \    | | |     /  \     | | |   .' ___  |  | | |   /  ___  |  | | |     /  \     | |  %%%
+%%%  | | |_/ | | \_|  | | |   | |__) |   | | |    / /\ \    | | |  / .'   \_|  | | |  |  (__ \_|  | | |    / /\ \    | |  %%%
+%%%  | |     | |      | | |   |  __ /    | | |   / ____ \   | | |  | |         | | |   '.___`-.   | | |   / ____ \   | |  %%%
+%%%  | |    _| |_     | | |  _| |  \ \_  | | | _/ /    \ \_ | | |  \ `.___.'\  | | |  |`\____) |  | | | _/ /    \ \_ | |  %%%
+%%%  | |   |_____|    | | | |____| |___| | | ||____|  |____|| | |   `._____.'  | | |  |_______.'  | | ||____|  |____|| |  %%%
+%%%  | |              | | |              | | |              | | |              | | |              | | |              | |  %%%
+%%%  | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' | '--------------' |  %%%
+%%%   '----------------' '----------------' '----------------' '----------------' '----------------' '----------------'   %%%
+%%%                                                                                                                       %%%
+%%%                                                 ** AVISO IMPORTANTE **                                                %%%
+%%%                         El acceso a este recurso de red se encuentra restringido a personal autorizado                %%%
+%%%                         por la empresa TRACSA, cualquier acceso no permitido repercutira en acciones                  %%%
+%%%                         juridicas y legales.                                                                          %%%
+%%%                                                                                                                       %%%
+%%%                                                                                                                       %%%
+%%%    DEPARTAMENTO DE TELECOMUNICACIONES.                                                                                %%%
+%%%                                                                                                                       %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
+service password-encryption
+ip domain-name CCNA-lab.com
+username gabriela secret admin1
+username paulina secret admin2
+username fridamaria secret admin3
+username rodolfo secret admin4
+username alejandro secret admin5
+username bryant secret admin6
+crypto key generate rsa general-keys modulus 1024
+line con 0 
+exec-timeout 15 0
+password clase
+login
+line vty 0 4
+exec-timeout 15 0
+password class
+transport input ssh
+login local
+exit
+interface loopback 0
+ip address 10.1.0.1 255.255.255.0
+interface loopback 1 
+ip address 10.1.1.1 255.255.255.0
+interface loopback 2
+ip address 10.1.2.1 255.255.255.0
+interface loopback 3
+ip address 10.1.3.1 255.255.255.0
+interface loopback 4
+ip address 10.1.4.1 255.255.255.0
+interface loopback 5
+ip address 10.1.5.1 255.255.255.0
+interface loopback 6
+ip address 10.1.6.1 255.255.255.0
+interface loopback 7
+ip address 10.1.7.1 255.255.255.0
+router ospf 1
+router-id 6.6.6.6
+network 172.30.59.80 255.255.255.252 area 0
+network 172.30.59.72 255.255.255.252 area 0
+network 10.1.0.0 0.0.255.255 area 0
+network 172.30.58.192 255.255.255.192  area 0
+network 172.30.56.0 255.255.255.0 area 0
+network 172.30.59.32 255.255.255.224  area 0
+network 172.30.40.0 255.255.248.0 area 0
+passive-interface g0/0
+passive-interface g0/0.30
+passive-interface g0/0.35
+passive-interface g0/0.40
+passive-interface g0/0.20
+passive-interface loopback0
+passive-interface loopback1
+passive-interface loopback2
+passive-interface loopback3
+passive-interface loopback4
+passive-interface loopback5
+passive-interface loopback6
+passive-interface loopback7
+area 0 authentication message-digest
+auto-cost reference-bandwidth 10000
+interface GigabitEthernet0/0.30
+encapsulation dot1Q 30
+ip address 172.30.40.1 255.255.248.0
+standby 1 ip 172.30.40.3
+standby 1 priority 255
+standby 1 preempt
+standby 1 track 1 shutdown
+
+interface GigabitEthernet0/0.35
+encapsulation dot1Q 35
+ip address 172.30.56.1 255.255.255.0
+standby 1 ip 172.30.56.3
+standby 1 priority 200
+standby 1 preempt
+standby 1 track 1 shutdown
+
+interface GigabitEthernet0/0.40
+encapsulation dot1Q 40
+ip address 172.30.58.193 255.255.255.192
+standby 1 ip 172.30.58.195
+standby 1 priority 200
+standby 1 preempt
+standby 1 track 1 shutdown
+
+interface GigabitEthernet0/0.20
+encapsulation dot1Q 20 native
+ip address 172.30.59.33 255.255.255.224
+standby 1 ip 172.30.59.35
+standby 1 priority 200
+standby 1 preempt
+standby 1 track 1 shutdown
+
+interface g0/0
+no shut
+interface s0/0/0
+ip address 172.30.59.74 255.255.255.252
+no shut
+ip ospf message-digest-key 10 md5 cisco
+ip ospf priority 0
+ip ospf hello-interval 40
+ip ospf dead-interval 160
+ip ospf cost 48
+interface s0/0/1
+ip address 172.30.59.82 255.255.255.252
+no shut
+ip ospf message-digest-key 10 md5 cisco
+ip ospf priority 0
+ip ospf hello-interval 40
+ip ospf dead-interval 160
+
+ip dhcp excluded-address 172.30.58.193 172.30.58.97
+ip dhcp pool VLAN40
+network 172.30.58.192 255.255.255.192
+default-router 172.30.58.195
+
+ip dhcp excluded-address 172.30.56.1 172.30.56.5
+ip dhcp pool VLAN35
+network 172.30.56.0 255.255.255.0
+default-router 172.30.56.3
+
+ip dhcp excluded-address 172.30.40.1 172.30.40.5
+ip dhcp pool VLAN30
+network 172.30.40.0 255.255.248.0
+default-router 172.30.40.3
