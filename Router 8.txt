@@ -31,12 +31,13 @@ banner motd #
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
 service password-encryption
 ip domain-name CCNA-lab.com
-username gabriela secret admin1
-username paulina secret admin2
-username fridamaria secret admin3
-username rodolfo secret admin4
-username alejandro secret admin5
-username bryant secret admin6
+username Daniel secret admin1
+username Miguel secret admin2
+username Ivan secret admin3
+username Luis secret admin4
+username Diego secret admin5
+username Jorge secret admin6
+username Javier secret admin6
 crypto key generate rsa general-keys modulus 1024
 line con 0 
 exec-timeout 15 0
