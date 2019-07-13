@@ -2,7 +2,7 @@
 en
 conf t
 hostname S3
-ip default-gateway 172.30.59.129
+ip default-gateway 172.30.59.35
 enable secret cisco
 banner motd #
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -107,5 +107,5 @@ switchport mode trunk
 exit
 
 interface vlan 20
-ip address 172.30.59.221 255.255.255.224
+ip address 172.30.59.37 255.255.255.224
 exit

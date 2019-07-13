@@ -37,7 +37,7 @@ username Ivan secret admin3
 username Luis secret admin4
 username Diego secret admin5
 username Jorge secret admin6
-username Javier secret admin6
+username Javier secret admin7
 crypto key generate rsa general-keys modulus 1024
 line con 0 
 exec-timeout 15 0
