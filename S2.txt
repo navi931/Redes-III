@@ -49,7 +49,7 @@ password class
 transport input ssh
 login local
 exit
-
+conf t
 vlan 35
 vlan 30
 vlan 40

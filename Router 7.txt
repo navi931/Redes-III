@@ -50,23 +50,107 @@ transport input ssh
 login local
 exit
 interface loopback 0
-ip address 172.30.32.1 255.255.248.0
+ip address 172.30.0.1 255.255.240.0
 interface loopback 1 
-ip address 172.30.59.1 255.255.255.224
-router ospf 1
-router-id 8.8.8.8
+ip address 172.30.52.1 255.255.254.0
+router ospf 1 
+router-id 7.7.7.7
 network 172.30.59.64 255.255.255.248 area 2
-network 172.30.32.0 255.255.248.0 area 2
-network 172.30.59.64 255.255.255.248 area 2
+network 172.30.0.0 255.255.240.0 area 0
+network 172.30.52.0 255.255.254.0 area 0
+network 172.30.59.84 255.255.255.252 area 0
+network 172.30.59.72 255.255.255.252  area 0
+network 172.30.58.192 255.255.255.192  area 0
+network 172.30.56.0 255.255.255.0 area 0
+network 172.30.59.32 255.255.255.224  area 0
+network 172.30.40.0 255.255.248.0 area 0
+passive-interface g0/0
+passive-interface g0/0.30
+passive-interface g0/0.35
+passive-interface g0/0.40
+passive-interface g0/0.20
 passive-interface loopback0
 passive-interface loopback1
+area 0 authentication message-digest
 area 2 authentication message-digest
 auto-cost reference-bandwidth 10000
-interface g0/0
-ip address 172.30.59.65 255.255.255.248
+exit
+access-list 1 permit 172.30.56.0 0.0.0.15
+access-list 1 deny 172.30.56.0 0.0.0.255
+access-list 1 permit 172.30.40.6 0.0.0.0
+access-list 1 deny 172.30.40.0 0.0.7.255
+access-list 1 deny 172.30.0.0 0.0.255.255
+access-list 1 deny 100.1.0.0 0.0.255.255
+access-list 1 deny 10.1.0.0 0.0.255.255
+interface s0/0/1
+ip access group out
+interface g0/1
+ip address 172.30.59.66 255.255.255.248
 no shut
 ip ospf message-digest-key 10 md5 cisco
-ip ospf priority 2
+ip ospf priority 1
 ip ospf hello-interval 40
 ip ospf dead-interval 160
+interface s0/0/1
+ip address 172.30.59.86 255.255.255.252
+no shut
+ip ospf message-digest-key 10 md5 cisco
+ip ospf hello-interval 40
+ip ospf dead-interval 160
+ip ospf cost 1542
+interface s0/0/0
+ip address 172.30.59.73 255.255.255.252
+no shut
+ip ospf message-digest-key 10 md5 cisco
+ip ospf hello-interval 40
+ip ospf dead-interval 160
+ip ospf cost 48
+
+interface GigabitEthernet0/0.30
+encapsulation dot1Q 30
+ip address 172.30.40.1 255.255.248.0
+standby 1 ip 172.30.40.3
+standby 1 priority 255
+standby 1 preempt
+standby 1 track 1 shutdown
+
+interface GigabitEthernet0/0.35
+encapsulation dot1Q 35
+ip address 172.30.56.1 255.255.255.0
+standby 1 ip 172.30.56.3
+standby 1 priority 255
+standby 1 preempt
+standby 1 track 1 shutdown
+
+interface GigabitEthernet0/0.40
+encapsulation dot1Q 40
+ip address 172.30.58.193 255.255.255.192
+standby 1 ip 172.30.58.195
+standby 1 priority 255
+standby 1 preempt
+standby 1 track 1 shutdown
+
+interface GigabitEthernet0/0.20
+encapsulation dot1Q 20 native
+ip address 172.30.59.33 255.255.255.224
+standby 1 ip 172.30.59.35
+standby 1 priority 255
+standby 1 preempt
+standby 1 track 1 shutdown
+interface g0/0
+no shut
+ip dhcp excluded-address 172.30.58.193 172.30.58.97
+ip dhcp pool VLAN40
+network 172.30.58.192 255.255.255.192
+default-router 172.30.58.195
+exit
+ip dhcp excluded-address 172.30.56.1 172.30.56.5
+ip dhcp pool VLAN35
+network 172.30.56.0 255.255.255.0
+default-router 172.30.56.3
+exit
+ip dhcp excluded-address 172.30.40.1 172.30.40.5
+ip dhcp pool VLAN30
+network 172.30.40.0 255.255.248.0
+default-router 172.30.40.3
 exit

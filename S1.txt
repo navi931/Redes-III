@@ -2,7 +2,7 @@
 en 
 conf t
 hostname S1
-ip default-gateway 172.30.59.193
+ip default-gateway 172.30.59.X
 enable secret cisco
 banner motd #
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
