@@ -1,5 +1,5 @@
 R10
-en
+en 
 conf t
 hostname R10
 enable secret cisco
@@ -50,106 +50,57 @@ transport input ssh
 login local
 exit
 interface loopback 0
-ip address 10.1.0.1 255.255.255.0
+ip address 172.30.24.1 255.255.248.0
 interface loopback 1 
-ip address 10.1.1.1 255.255.255.0
+ip address 172.30.54.1 255.255.254.0
 interface loopback 2
-ip address 10.1.2.1 255.255.255.0
+ip address 172.30.48.1 255.255.252.0
 interface loopback 3
-ip address 10.1.3.1 255.255.255.0
-interface loopback 4
-ip address 10.1.4.1 255.255.255.0
-interface loopback 5
-ip address 10.1.5.1 255.255.255.0
-interface loopback 6
-ip address 10.1.6.1 255.255.255.0
-interface loopback 7
-ip address 10.1.7.1 255.255.255.0
+ip address 172.30.58.1 255.255.255.192
+key chain cnna-tracsa
+key 1
+key-string securetraffic
 router ospf 1
-router-id 6.6.6.6
-network 172.30.59.80 255.255.255.252 area 0
-network 172.30.59.72 255.255.255.252 area 0
-network 10.1.0.0 0.0.255.255 area 0
-network 172.30.58.192 255.255.255.192  area 0
-network 172.30.56.0 255.255.255.0 area 0
-network 172.30.59.32 255.255.255.224  area 0
-network 172.30.40.0 255.255.248.0 area 0
-passive-interface g0/0
-passive-interface g0/0.30
-passive-interface g0/0.35
-passive-interface g0/0.40
-passive-interface g0/0.20
+router-id 5.5.5.5
+log-adjacency-changes
+redistribute eigrp 10 subnets
+redistribute connected 
+network 172.30.59.64 255.255.255.248 area 2
+network 172.30.24.0 255.255.248.0 area 2
+network 172.30.54.0 255.255.254.0 area 2
+area 2 authentication message-digest
+auto-cost reference-bandwidth 10000
 passive-interface loopback0
 passive-interface loopback1
 passive-interface loopback2
 passive-interface loopback3
-passive-interface loopback4
-passive-interface loopback5
-passive-interface loopback6
-passive-interface loopback7
-area 0 authentication message-digest
-auto-cost reference-bandwidth 10000
-interface GigabitEthernet0/0.30
-encapsulation dot1Q 30
-ip address 172.30.40.1 255.255.248.0
-standby 1 ip 172.30.40.3
-standby 1 priority 255
-standby 1 preempt
-standby 1 track 1 shutdown
-
-interface GigabitEthernet0/0.35
-encapsulation dot1Q 35
-ip address 172.30.56.1 255.255.255.0
-standby 1 ip 172.30.56.3
-standby 1 priority 200
-standby 1 preempt
-standby 1 track 1 shutdown
-
-interface GigabitEthernet0/0.40
-encapsulation dot1Q 40
-ip address 172.30.58.193 255.255.255.192
-standby 1 ip 172.30.58.195
-standby 1 priority 200
-standby 1 preempt
-standby 1 track 1 shutdown
-
-interface GigabitEthernet0/0.20
-encapsulation dot1Q 20 native
-ip address 172.30.59.33 255.255.255.224
-standby 1 ip 172.30.59.35
-standby 1 priority 200
-standby 1 preempt
-standby 1 track 1 shutdown
-
+passive-interface s0/0/0
 interface g0/0
+ip address 172.30.59.67 255.255.255.248
+ip ospf message-digest-key 10 md5 cisco
+ip ospf priority 0
+ip ospf hello-interval 40
+ip ospf dead-interval 160
 no shut
 interface s0/0/0
-ip address 172.30.59.74 255.255.255.252
+ip address 172.30.59.78 255.255.255.252
 no shut
-ip ospf message-digest-key 10 md5 cisco
-ip ospf priority 0
-ip ospf hello-interval 40
-ip ospf dead-interval 160
-ip ospf cost 48
-interface s0/0/1
-ip address 172.30.59.82 255.255.255.252
-no shut
-ip ospf message-digest-key 10 md5 cisco
-ip ospf priority 0
-ip ospf hello-interval 40
-ip ospf dead-interval 160
-
-ip dhcp excluded-address 172.30.58.193 172.30.58.97
-ip dhcp pool VLAN40
-network 172.30.58.192 255.255.255.192
-default-router 172.30.58.195
-
-ip dhcp excluded-address 172.30.56.1 172.30.56.5
-ip dhcp pool VLAN35
-network 172.30.56.0 255.255.255.0
-default-router 172.30.56.3
-
-ip dhcp excluded-address 172.30.40.1 172.30.40.5
-ip dhcp pool VLAN30
-network 172.30.40.0 255.255.248.0
-default-router 172.30.40.3
+ip bandwidth-percent eigrp 10 40
+bandwidth 1024
+ip hello-interval eigrp 1 30
+ip hold-interval eigrp 1 90
+ip authentication mode eigrp 10 md5
+ip authentication key-chain eigrp 10 ccna-tracsa
+end
+router eigrp 10
+eigrp router-id 5.5.5.5
+no auto-summary
+passive-interface g0/0
+passive-interface loopback 0
+passive-interface loopback 1
+passive-interface loopback 2
+passive-interface loopback 3
+network 172.30.59.76
+network 172.30.48.0
+network 172.30.58.0
+redistribute ospf 1 metric 1400 150 255 120 155

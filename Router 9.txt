@@ -1,6 +1,6 @@
-Router 9
-enable
-configure terminal
+R9
+en
+conf t
 hostname R9
 enable secret cisco
 banner motd #
@@ -50,53 +50,50 @@ transport input ssh
 login local
 exit
 interface loopback 0
-ip address 100.1.169.1 255.255.255.0
-interface loopback 1
-ip address 100.1.170.1 255.255.255.0
-interface loopback 2
-ip address 100.1.171.1 255.255.255.0
-interface loopback 3
-ip address 100.1.172.1 255.255.255.0
-interface loopback 4
-ip address 100.1.173.1 255.255.255.0
-interface loopback 5
-ip address 100.1.174.1 255.255.255.0
-key chain cnna-tracsa
-key 1
-key-string securetraffic
-interface s0/0/0
-ip address 172.30.59.77 255.255.255.252
-no shut
-ip bandwidth-percent eigrp 10 40
-bandwidth 1024
-ip hello-interval eigrp 1 30
-ip hold-interval eigrp 1 90
-ip authentication mode eigrp 10 md5
-ip authentication key-chain eigrp 10 ccna-tracsa
-end
-interface g0/0
-ip address 172.30.58.65 255.255.255.192
-no shut
+ip address 172.30.16.1 255.255.248.0
+interface loopback 1 
+ip address 172.30.58.129 255.255.255.192
+router bgp 100
+network 148.239.62.0 mask 255.255.0.0
+router bgp 100
+neighbor 148.239.62.100 remote-as 200
 exit
-ip route 0.0.0.0 0.0.0.0 serial0/0/0
-ip dhcp excluded-address 172.30.58.65 172.30.58.67
-ip dhcp pool 40H
-network 172.30.58.64 255.255.255.192
-default-router 172.30.58.65
-
-router eigrp 10
-no auto-summary
-passive-interface Loopback0
-passive-interface Loopback1
-passive-interface Loopback2
-passive-interface Loopback3
-passive-interface Loopback4
-passive-interface Loopback5
-network 100.1.169.0 0.0.0.255
-network 100.1.170.0 0.0.0.255
-network 100.1.171.0 0.0.0.255
-network 100.1.172.0 0.0.0.255
-network 100.1.173.0 0.0.0.255
-network 100.1.174.0 0.0.0.255
-network 172.30.58.64 255.255.255.192
-network 172.30.59.76 255.255.255.252
+ip nat inside source static 172.30.0.0 148.239.62.1
+router ospf 1 
+router-id 4.4.4.4
+network 172.30.59.84 255.255.255.252 area 0
+network 172.30.59.80 255.255.255.252 area 0
+network 172.30.16.0 255.255.248.0 area 0
+network 172.30.58.128 255.255.255.192 area 0
+network 148.239.62.0 255.255.255.0 area 0
+default-information originate
+passive-interface loopback0
+passive-interface loopback1
+passive-interface g0/0
+passive-interface g0/1
+area 0 authentication message-digest
+auto-cost reference-bandwidth 10000
+interface g0/1
+ip address 148.239.62.200 255.255.0.0
+ip nat outside
+no shut
+interface g0/0
+ip address 192.168.0.1 255.255.255.252
+ip nat inside
+no shut
+interface s0/0/1
+ip address 172.30.59.85 255.255.255.252
+ip nat inside
+no shut
+ip ospf message-digest-key 10 md5 cisco
+ip ospf hello-interval 40
+ip ospf dead-interval 160
+ip ospf cost 1542
+interface s0/0/0
+ip address 172.30.59.81 255.255.255.252
+ip nat inside
+no shut
+ip ospf message-digest-key 10 md5 cisco
+ip ospf hello-interval 40
+ip ospf dead-interval 160
+ip ospf cost 48
