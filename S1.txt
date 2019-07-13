@@ -52,5 +52,5 @@ login local
 exit
 vlan 20
 int vlan 20
-ip address 172.30.59.64 255.255.255.248
+ip address 172.30.59.68 255.255.255.248
 exit
