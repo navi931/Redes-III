@@ -98,13 +98,7 @@ ip ospf message-digest-key 10 md5 cisco
 ip ospf hello-interval 40
 ip ospf dead-interval 160
 ip ospf cost 1542
-interface s0/0/0
-ip address 172.30.59.73 255.255.255.252
-no shut
-ip ospf message-digest-key 10 md5 cisco
-ip ospf hello-interval 40
-ip ospf dead-interval 160
-ip ospf cost 48
+
 
 interface GigabitEthernet0/1.30
 encapsulation dot1Q 30
