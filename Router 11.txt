@@ -1,7 +1,7 @@
-en 
+R11
+en
 conf t
-hostname S4
-ip default-gateway 172.30.59.68
+hostname R11
 enable secret cisco
 banner motd #
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -31,13 +31,13 @@ banner motd #
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
 service password-encryption
 ip domain-name CCNA-lab.com
-username miguel secret admin1
-username luis secret admin2
-username daniel secret admin3
-username ivan secret admin4
-username javier secret admin5
-username jorge secret admin6
-username mono secret admin7
+username Daniel secret admin1
+username Miguel secret admin2
+username Ivan secret admin3
+username Luis secret admin4
+username Diego secret admin5
+username Jorge secret admin6
+username Javier secret admin6
 crypto key generate rsa general-keys modulus 1024
 line con 0 
 exec-timeout 15 0
@@ -49,6 +49,51 @@ password class
 transport input ssh
 login local
 exit
-
-int vlan 20
-ip address 172.30.59.221 255.255.255.224
+interface loopback 0
+ip address 172.30.16.1 255.255.248.0
+interface loopback 1 
+ip address 172.30.58.129 255.255.255.192
+router bgp 100
+network 148.239.62.0 mask 255.255.0.0
+router bgp 100
+neighbor 148.239.62.100 remote-as 200
+exit
+ip nat inside source static 172.30.0.0 148.239.62.1
+router ospf 1 
+router-id 4.4.4.4
+network 172.30.59.84 255.255.255.252 area 0
+network 172.30.59.80 255.255.255.252 area 0
+network 172.30.16.0 255.255.248.0 area 0
+network 172.30.58.128 255.255.255.192 area 0
+network 148.239.62.0 255.255.255.0 area 0
+default-information originate
+passive-interface loopback0
+passive-interface loopback1
+passive-interface g0/0
+passive-interface g0/1
+area 0 authentication message-digest
+auto-cost reference-bandwidth 10000
+interface g0/1
+ip address 148.239.62.200 255.255.0.0
+ip nat outside
+no shut
+interface g0/0
+ip address 192.168.0.1 255.255.255.252
+ip nat inside
+no shut
+interface s0/0/1
+ip address 172.30.59.85 255.255.255.252
+ip nat inside
+no shut
+ip ospf message-digest-key 10 md5 cisco
+ip ospf hello-interval 40
+ip ospf dead-interval 160
+ip ospf cost 1542
+interface s0/0/0
+ip address 172.30.59.81 255.255.255.252
+ip nat inside
+no shut
+ip ospf message-digest-key 10 md5 cisco
+ip ospf hello-interval 40
+ip ospf dead-interval 160
+ip ospf cost 48

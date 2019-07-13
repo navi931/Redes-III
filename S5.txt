@@ -70,6 +70,7 @@ switchport access vlan 60
 switchport port-security violation restrict
 switchport port-security mac-address sticky 
 switchport port-security maximum 2
+shutdown
 
 int fa     0/2
 switchport mode trunk
@@ -94,4 +95,8 @@ no shutdown
 exit
 interface port-channel 1
 switchport mode trunk
+exit
+
+interface vlan 20
+ip address 172.30.59.222 255.255.255.224
 exit
