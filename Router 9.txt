@@ -97,3 +97,8 @@ ip ospf message-digest-key 10 md5 cisco
 ip ospf hello-interval 40
 ip ospf dead-interval 160
 ip ospf cost 48
+exit
+ip route 0.0.0.0 0.0.0.0 gi 0/1
+router ospf 1
+default-information originate
+exi
