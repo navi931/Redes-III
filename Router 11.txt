@@ -64,7 +64,7 @@ ip address 100.1.174.1 255.255.255.0
 key chain cnna-tracsa
 key 1
 key-string securetraffic
-interface s0/0/0
+interface s0/2/1
 ip address 172.30.59.77 255.255.255.252
 no shut
 ip bandwidth-percent eigrp 10 40
