@@ -58,7 +58,7 @@ network 148.239.62.0 mask 255.255.0.0
 router bgp 100
 neighbor 148.239.62.100 remote-as 200
 exit
-ip nat inside source static 172.30.0.0 148.239.62.1
+ip nat inside source list 100 interface gigabitethernet0/1 overload
 router ospf 1 
 router-id 4.4.4.4
 network 172.30.59.84 255.255.255.252 area 0
