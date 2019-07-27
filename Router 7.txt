@@ -87,14 +87,12 @@ ip access group out
 interface g0/0
 ip address 172.30.59.66 255.255.255.248
 no shut
-ip ospf message-digest-key 10 md5 cisco
 ip ospf priority 255
 ip ospf hello-interval 40
 ip ospf dead-interval 160
 interface s0/0/1
 ip address 172.30.59.86 255.255.255.252
 no shut
-ip ospf message-digest-key 10 md5 cisco
 ip ospf hello-interval 40
 ip ospf dead-interval 160
 ip ospf cost 1542

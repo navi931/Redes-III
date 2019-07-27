@@ -37,7 +37,7 @@ username Ivan secret admin3
 username Luis secret admin4
 username Diego secret admin5
 username Jorge secret admin6
-username Javier secret admin6
+username Javier secret admin7
 crypto key generate rsa general-keys modulus 1024
 line con 0 
 exec-timeout 15 0
@@ -57,15 +57,14 @@ router ospf 1
 router-id 8.8.8.8
 network 172.30.59.64 255.255.255.248 area 2
 network 172.30.32.0 255.255.248.0 area 2
-network 172.30.59.1 255.255.255.224 area 2
+network 172.30.59.64 255.255.255.248 area 2
 passive-interface loopback0
 passive-interface loopback1
 area 2 authentication message-digest
 auto-cost reference-bandwidth 10000
-interface f0/0
+interface g0/0
 ip address 172.30.59.65 255.255.255.248
 no shut
-ip ospf message-digest-key 10 md5 cisco
 ip ospf priority 2
 ip ospf hello-interval 40
 ip ospf dead-interval 160

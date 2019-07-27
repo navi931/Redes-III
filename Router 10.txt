@@ -37,7 +37,7 @@ username Ivan secret admin3
 username Luis secret admin4
 username Diego secret admin5
 username Jorge secret admin6
-username Javier secret admin6
+username Javier secret admin7
 crypto key generate rsa general-keys modulus 1024
 line con 0 
 exec-timeout 15 0
@@ -74,30 +74,26 @@ passive-interface loopback0
 passive-interface loopback1
 passive-interface loopback2
 passive-interface loopback3
-passive-interface s0/1/1
-interface f0/0
+passive-interface s0/0/0
+interface g0/0
 ip address 172.30.59.67 255.255.255.248
-ip ospf message-digest-key 10 md5 cisco
 ip ospf priority 0
 ip ospf hello-interval 40
 ip ospf dead-interval 160
 no shut
-interface s0/1/1
+interface s0/0/0
 ip address 172.30.59.78 255.255.255.252
 no shut
 ip bandwidth-percent eigrp 10 40
 bandwidth 1024
 ip hello-interval eigrp 1 30
-ip hold-time eigrp 1 90
-ip authentication mode eigrp 10 md5
+ip hold-interval eigrp 1 90
 ip authentication key-chain eigrp 10 ccna-tracsa
 end
-conf t
 router eigrp 10
 eigrp router-id 5.5.5.5
 no auto-summary
-
-passive-interface f0/0
+passive-interface g0/0
 passive-interface loopback 0
 passive-interface loopback 1
 passive-interface loopback 2

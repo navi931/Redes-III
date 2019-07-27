@@ -126,7 +126,6 @@ no shut
 interface s0/0/1
 ip address 172.30.59.82 255.255.255.252
 no shut
-ip ospf message-digest-key 10 md5 cisco
 ip ospf priority 0
 ip ospf hello-interval 40
 ip ospf dead-interval 160
