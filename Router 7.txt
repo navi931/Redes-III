@@ -75,13 +75,6 @@ area 0 authentication message-digest
 area 2 authentication message-digest
 auto-cost reference-bandwidth 10000
 exit
-access-list 1 permit 172.30.56.0 0.0.0.15
-access-list 1 deny 172.30.56.0 0.0.0.255
-access-list 1 permit 172.30.40.6 0.0.0.0
-access-list 1 deny 172.30.40.0 0.0.7.255
-access-list 1 deny 172.30.0.0 0.0.255.255
-access-list 1 deny 100.1.0.0 0.0.255.255
-access-list 1 deny 10.1.0.0 0.0.255.255
 interface s0/0/1
 ip access group out
 interface g0/0
