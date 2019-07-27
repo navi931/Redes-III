@@ -60,8 +60,8 @@ neighbor 148.239.62.100 remote-as 200
 exit
 access-list 100 permit ip 172.30.0.0 0.0.127.255 any
 ip nat inside source list 100 interface gigabitethernet0/1 overload
-ip nat inside source static tcp 172.30.56.6 80 148.239.63.18 80 XXX
-ip nat inside source static udp 172.30.40.6 69 148.239.63.18 69 XXX
+ip nat inside source static tcp 172.30.56.6 80 148.239.63.18 80
+ip nat inside source static udp 172.30.40.6 69 148.239.63.18 69
 router ospf 1 
 router-id 4.4.4.4
 network 172.30.59.84 255.255.255.252 area 0
