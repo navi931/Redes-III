@@ -74,14 +74,14 @@ passive-interface loopback0
 passive-interface loopback1
 passive-interface loopback2
 passive-interface loopback3
-passive-interface s0/0/0
+passive-interface s0/1/1
 interface g0/0
 ip address 172.30.59.67 255.255.255.248
 ip ospf priority 0
 ip ospf hello-interval 40
 ip ospf dead-interval 160
 no shut
-interface s0/0/0
+interface s0/1/1
 ip address 172.30.59.78 255.255.255.252
 no shut
 ip bandwidth-percent eigrp 10 40
