@@ -89,7 +89,7 @@ bandwidth 1024
 ip hello-interval eigrp 1 30
 ip hold-interval eigrp 1 90
 ip authentication key-chain eigrp 10 ccna-tracsa
-end
+
 router eigrp 10
 eigrp router-id 5.5.5.5
 no auto-summary
