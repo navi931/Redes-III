@@ -50,7 +50,13 @@ password class
 transport input ssh
 login local
 exit
+
 vlan 20
 int vlan 20
 ip address 172.30.59.68 255.255.255.248
+exit
+
+int range fa 0/5-7
+sw mode trunk
+sw tr na vlan 20
 exit
