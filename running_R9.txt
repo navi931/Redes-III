@@ -1,0 +1,213 @@
+R9#show run
+Building configuration...
+
+Current configuration : 6063 bytes
+!
+! Last configuration change at 02:14:03 UTC Tue Jul 30 2019
+!
+version 15.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname R9
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$j33i$p1xO3sF/ZmZT5NjEdmXL30
+!
+no aaa new-model
+memory-size iomem 5
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+ip domain name CCNA-lab.com
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+cts logging verbose
+!
+!
+license udi pid CISCO2901/K9 sn FJC1916A0ND
+license accept end user agreement
+license boot module c2900 technology-package securityk9
+license boot module c2900 technology-package datak9
+!
+!
+username Daniel secret 5 $1$Lgy8$BSqiphSzZClaoAWU7L0mK0
+username Miguel secret 5 $1$zTHA$YlobdsAmnYy6.H/JmRmZD.
+username Ivan secret 5 $1$5hKb$FxUuvVB5.MJ22W4BGJJ6p/
+username Luis secret 5 $1$epw9$LLysNo7dGytDynHwwSyjZ1
+username Diego secret 5 $1$s1xP$zGdnleW21rJwAHjn1SU1Y/
+username Jorge secret 5 $1$qfk3$oKVTJ/Li1adEdlYHtYjv11
+username Javier secret 5 $1$pPCq$5v774oryl9JhZGdMIrTOu0
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 172.30.16.1 255.255.248.0
+!
+interface Loopback1
+ ip address 172.30.58.129 255.255.255.192
+!
+interface Embedded-Service-Engine0/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/0
+ ip address 192.168.0.1 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ ip address 148.239.63.18 255.255.255.0
+ ip nat outside
+ ip virtual-reassembly in
+ duplex auto
+ speed auto
+!
+interface Serial0/0/0
+ no ip address
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf dead-interval 160
+ ip ospf hello-interval 40
+ ip ospf cost 48
+ clock rate 2000000
+!
+interface Serial0/0/1
+ no ip address
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf dead-interval 160
+ ip ospf hello-interval 40
+ ip ospf cost 1542
+ clock rate 2000000
+!
+!
+router ospf 1
+ router-id 4.4.4.4
+ auto-cost reference-bandwidth 10000
+ area 0 authentication message-digest
+ passive-interface GigabitEthernet0/0
+ passive-interface GigabitEthernet0/1
+ passive-interface Loopback0
+ passive-interface Loopback1
+ network 148.239.62.0 0.0.0.255 area 0
+ network 172.30.16.0 0.0.7.255 area 0
+ network 172.30.58.128 0.0.0.63 area 0
+ network 172.30.59.80 0.0.0.3 area 0
+ network 172.30.59.84 0.0.0.3 area 0
+ default-information originate
+!
+router bgp 100
+ bgp log-neighbor-changes
+ network 148.239.63.0 mask 255.255.255.0
+ redistribute ospf 1
+ neighbor 148.239.63.20 remote-as 200
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+ip nat inside source list 100 interface GigabitEthernet0/1 overload
+ip nat inside source static udp 172.30.40.6 69 148.239.63.18 69 extendable
+ip nat inside source static tcp 172.30.56.6 80 148.239.63.18 80 extendable
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/1
+!
+!
+!
+access-list 15 deny   172.30.58.192 0.0.0.63
+access-list 100 permit ip 172.30.0.0 0.0.127.255 any
+access-list 150 deny   ip 172.30.58.192 0.0.0.63 172.30.0.0 0.0.127.255
+access-list 150 permit ip 172.30.58.192 0.0.0.63 host 172.30.40.6
+access-list 150 permit tcp 172.30.58.192 0.0.0.63 172.30.56.0 0.0.0.15
+access-list 150 permit ip any any
+!
+control-plane
+!
+!
+banner motd ^C
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                                                                                                                       %%%
+%%%                                                                                                                       %%%
+%%%             _/_/_/_/_/  _/_/_/      _/_/      _/_/_/    _/_/_/    _/_/                                                %%%
+%%%                _/      _/    _/  _/    _/  _/        _/        _/    _/                                               %%%
+%%%               _/      _/_/_/    _/_/_/_/  _/          _/_/    _/_/_/_/                                                %%%
+%%%              _/      _/    _/  _/    _/  _/              _/  _/    _/                                                 %%%
+%%%             _/      _/    _/  _/    _/    _/_/_/  _/_/_/    _/    _/                                                  %%%
+%%%                                                                                                                       %%%
+%%%                                                 ** AVISO IMPORTANTE **                                                %%%
+%%%                         El acceso a este recurso de red se encuentra restringido a personal autorizado                %%%
+%%%                         por la empresa TRACSA, cualquier acceso no permitido repercutira en acciones                  %%%
+%%%                         juridicas y legales.                                                                          %%%
+%%%                                                                                                                       %%%
+%%%                                                                                                                       %%%
+%%%    DEPARTAMENTO DE TELECOMUNICACIONES.                                                                                %%%
+%%%                                                                                                                       %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+^C
+!
+line con 0
+ exec-timeout 15 0
+ password 7 05080A0E3249
+ logging synchronous
+ login
+line aux 0
+line 2
+ no activation-character
+ no exec
+ transport preferred none
+ transport output lat pad telnet rlogin lapb-ta mop udptn v120 ssh
+ stopbits 1
+line vty 0 4
+ exec-timeout 15 0
+ password 7 13061B13181F
+ login local
+ transport input ssh
+!
+scheduler allocate 20000 1000
+!
+end
