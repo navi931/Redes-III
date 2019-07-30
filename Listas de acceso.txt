@@ -1,0 +1,5 @@
+access-list 15 deny ip 172.30.58.192 0.0.0.63 172.30.0.0 0.0.127.255
+access-list 15 permit ip 172.30.58.192 0.0.0.63 172.30.40.6
+access-list 15 permit (puerto 80) 172.30.58.192 0.0.0.63 172.30.56. 0.0.0.X
+access-list 15 permit (puerto 2035)172.30.58.192 0.0.0.63 172.30.56. 0.0.0.X
+access-list 15 permit ip any any
